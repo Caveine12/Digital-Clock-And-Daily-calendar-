@@ -5,26 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <title>Digital Clock And Daily Calendar</title>
+  <title>Digital Clock & TikTok Downloader</title>
+  <style>
+    /* === TikTok Downloader Style === */
+    .downloader {
+      margin-top: 40px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 25px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .downloader:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(255,255,255,0.2);
+    }
+
+    .downloader h2 {
+      margin-bottom: 15px;
+      color: #ffd166;
+      text-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
+    }
+
+    .downloader input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 10px;
+      font-size: 16px;
+      text-align: center;
+      outline: none;
+    }
+
+    .downloader button {
+      background: linear-gradient(90deg, #ff0050, #ff7a00);
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .downloader button:hover {
+      background: linear-gradient(90deg, #ff7a00, #ff0050);
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 15px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
-<div class="header">
+  <div class="header">
     <h>Hisyaam</h>
     <img src="thumb.jpeg" alt="Profile" class="profile-pic">
   </div>
-    <h1>Digital Clock And Daily Calendar</h1><a> 💫 Hi and welcome! Enjoy exploring this site.</a>
-    
-    <div id="clock"style="font-size:48px; text-align:center; margin-top:20%;"></div>
-    <script>
-      setInterval(() => {
-        let date = new Date()
-        let clock = document.getElementById('clock');
-        let time =
-              date.getHours().toString().padStart(2, '0')+":"+
-              date.getMinutes().toString().padStart(2, '0') + ":" +
-              date.getSeconds().toString().padStart(2, '0')
 
-// Hari dan tanggal (bahasa Inggris)
+  <h1>Digital Clock And Daily Calendar</h1>
+  <a> 💫 Hi and welcome! Enjoy exploring this site.</a>
+
+  <!-- Clock -->
+  <div id="clock" style="font-size:48px; text-align:center; margin-top:10%;"></div>
+
+  <!-- TikTok Downloader -->
+  <div class="downloader">
+    <h2>🎵 TikTok Video Downloader</h2>
+    <input id="url" type="text" placeholder="Paste TikTok video link here...">
+    <br>
+    <button id="downloadBtn">Download</button>
+    <div id="result"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Hisyaam. All rights reserved.
+  </footer>
+
+  <script>
+    // CLOCK SCRIPT
+    setInterval(() => {
+      let date = new Date();
+      let clock = document.getElementById('clock');
+      let time =
+        date.getHours().toString().padStart(2, '0') + ":" +
+        date.getMinutes().toString().padStart(2, '0') + ":" +
+        date.getSeconds().toString().padStart(2, '0');
+
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const months = [
         "January", "February", "March", "April", "May", "June",
@@ -35,15 +114,47 @@
       let day = date.getDate();
       let month = months[date.getMonth()];
       let year = date.getFullYear();
-
       let fullDate = `${dayName}, ${month} ${day}, ${year}`;
-
-      // Tampilkan jam + tanggal
       clock.innerHTML = `${time}<br>${fullDate}`;
     }, 1000);
+
+    // DOWNLOADER SCRIPT
+    document.getElementById('downloadBtn').addEventListener('click', async () => {
+      const url = document.getElementById('url').value.trim();
+      const result = document.getElementById('result');
+
+      if (!url) {
+        result.innerHTML = "<p style='color:red'>Masukkan URL dulu!</p>";
+        return;
+      }
+
+      result.innerHTML = "<p>Sedang memproses...</p>";
+
+      try {
+        // Ubah URL API di bawah ini jika kamu sudah deploy backend sendiri
+        const apiURL = `https://tiktok-api.onrender.com/download?url=${encodeURIComponent(url)}`;
+
+        const res = await fetch(apiURL);
+        const data = await res.json();
+
+        if (data.status === "success") {
+          result.innerHTML = `
+            <video controls>
+              <source src="${data.video_url}" type="video/mp4">
+            </video>
+            <br>
+            <a href="${data.video_url}" download="tiktok-video.mp4">
+              <button>Download Video</button>
+            </a>
+          `;
+        } else {
+          result.innerHTML = "<p style='color:red'>Gagal memproses video!</p>";
+        }
+      } catch (error) {
+        result.innerHTML = "<p style='color:red'>Terjadi kesalahan. Coba lagi.</p>";
+        console.error(error);
+      }
+    });
   </script>
-  <footer>
-  &copy; 2025 Hisyaam. All rights reserved.
-</footer>
 </body>
 </html>
