@@ -6,68 +6,6 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <title>Digital Clock & TikTok Downloader</title>
-  <style>
-    /* === TikTok Downloader Style === */
-    .downloader {
-      margin-top: 40px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px 25px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .downloader:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
-    }
-
-    .downloader h2 {
-      margin-bottom: 15px;
-      color: #ffd166;
-      text-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
-    }
-
-    .downloader input {
-      width: 90%;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      margin-bottom: 10px;
-      font-size: 16px;
-      text-align: center;
-      outline: none;
-    }
-
-    .downloader button {
-      background: linear-gradient(90deg, #ff0050, #ff7a00);
-      border: none;
-      color: white;
-      padding: 10px 25px;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .downloader button:hover {
-      background: linear-gradient(90deg, #ff7a00, #ff0050);
-      transform: scale(1.05);
-    }
-
-    #result {
-      margin-top: 15px;
-    }
-
-    video {
-      width: 100%;
-      border-radius: 15px;
-      margin-top: 15px;
-    }
-  </style>
 </head>
 <body>
   <div class="header">
@@ -118,42 +56,7 @@
       clock.innerHTML = `${time}<br>${fullDate}`;
     }, 1000);
 
-    // DOWNLOADER SCRIPT
-    document.getElementById('downloadBtn').addEventListener('click', async () => {
-      const url = document.getElementById('url').value.trim();
-      const result = document.getElementById('result');
-
-      if (!url) {
-        result.innerHTML = "<p style='color:red'>Masukkan URL dulu!</p>";
-        return;
-      }
-
-      result.innerHTML = "<p>Sedang memproses...</p>";
-
-      try {
-        // Ubah URL API di bawah ini jika kamu sudah deploy backend sendiri
-        const apiURL = `https://tiktok-api.onrender.com/download?url=${encodeURIComponent(url)}`;
-
-        const res = await fetch(apiURL);
-        const data = await res.json();
-
-        if (data.status === "success") {
-          result.innerHTML = `
-            <video controls>
-              <source src="${data.video_url}" type="video/mp4">
-            </video>
-            <br>
-            <a href="${data.video_url}" download="tiktok-video.mp4">
-              <button>Download Video</button>
-            </a>
-          `;
-        } else {
-          result.innerHTML = "<p style='color:red'>Gagal memproses video!</p>";
-        }
-      } catch (error) {
-        result.innerHTML = "<p style='color:red'>Terjadi kesalahan. Coba lagi.</p>";
-        console.error(error);
-      }
+    
     });
   </script>
 </body>
