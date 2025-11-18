@@ -1,21 +1,16 @@
 /* === Global Style === */
 body {
   margin: 0;
-  padding: 20px 0;
-  padding-top: 140px;
+  padding: 140px 0 20px; /* Tambah jarak atas 140px */
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
-
-  /* Background animasi */
   background: linear-gradient(-45deg, #2b2b52, #24243e, #302b63, #0f0c29);
   background-size: 400% 400%;
   animation: gradientShift 10s ease infinite;
-
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 /* === Header kiri atas === */
 .header {
   position: absolute;
