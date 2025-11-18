@@ -1,16 +1,18 @@
 /* === Global Style === */
 body {
   margin: 0;
-  padding: 0;
+  padding: 20px 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #1e1e2f, #2a2a72);
   color: #ffffff;
-  height: 100vh;
+
+  /* Background animasi */
+  background: linear-gradient(-45deg, #2b2b52, #24243e, #302b63, #0f0c29);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
 /* === Header kiri atas === */
@@ -48,7 +50,7 @@ body {
 }
 
 h1 {
-  margin: 10px 0;
+  margin: 80px 0 10px;
   font-size: 32px;
   color: #ffffff;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
@@ -59,6 +61,7 @@ a {
   color: #ffd166;
   margin-bottom: 40px;
   display: block;
+  text-align: center;
 }
 
 /* === Clock Container === */
@@ -67,6 +70,8 @@ a {
   font-weight: 600;
   text-align: center;
   padding: 20px 40px;
+  margin: 40px 0;
+
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.1);
@@ -86,10 +91,21 @@ a {
   100% { background-position: 0% 50%; }
 }
 
-body {
-  background: linear-gradient(-45deg, #2b2b52, #24243e, #302b63, #0f0c29);
-  background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite;
+/* === Footer === */
+footer {
+  position: relative;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  text-align: center;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+footer:hover {
+  color: #ffd166;
 }
 
 /* === Responsif === */
@@ -134,7 +150,7 @@ body {
   }
 }
 
-/* Desktop / Layar Besar */
+/* Desktop */
 @media (min-width: 1025px) {
   #clock {
     font-size: 100px;
@@ -157,22 +173,4 @@ body {
     width: 70px;
     height: 70px;
   }
-}
-/* === Copyright / Footer === */
-footer {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 1px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-
-footer:hover {
-  color: #ffd166;
-}
+  }
