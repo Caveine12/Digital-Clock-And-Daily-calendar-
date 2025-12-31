@@ -31,61 +31,55 @@
   </footer>
 
 <script>
-   // CONFIG
-const TEST_MODE = false; // 🔥 ubah false saat live
-let triggered = false;
+  function showNewYear() {
+    document.getElementById("newYearOverlay").style.display = "flex";
 
-   // NEW YEAR FUNCTION
-function showNewYear() {
-  const overlay = document.getElementById("newYearOverlay");
-  if (!overlay) {
-    console.error("Overlay tidak ditemukan");
-    return;
+    if (Notification.permission === "granted") {
+      new Notification("🎉 Happy New Year 2026!", {
+        body: "Semoga tahun ini penuh berkah dan kebahagiaan ✨",
+        icon: "favicon.ico"
+      });
+    }
   }
 
-  overlay.innerHTML = `
-    🎉 Happy New Year 2026 🎉<br>
-    <span>Semoga tahun ini membawa kebaikan ✨</span>
-  `;
-  overlay.style.display = "flex";
-
-  if ("Notification" in window && Notification.permission === "granted") {
-    new Notification("🎉 Happy New Year 2026!", {
-      body: "Semoga tahun ini membawa kebaikan ✨",
-      icon: "favicon.ico"
-    });
-  }
-}
-
-  // PERMISSION
-if ("Notification" in window) {
-  Notification.requestPermission();
-}
-
-// MAIN LOOP (SATU-SATUNYA)
-setInterval(() => {
-  const date = new Date();
-
-  // TEST MODE → langsung trigger
-  if (TEST_MODE && !triggered) {
-    triggered = true;
-    showNewYear();
-    return;
+  if ("Notification" in window) {
+    Notification.requestPermission();
   }
 
-  // LIVE MODE
-  if (
-    !triggered &&
-    date.getFullYear() === 2026 &&
-    date.getMonth() === 0 &&
-    date.getDate() === 1 &&
-    date.getHours() === 0 &&
-    date.getMinutes() === 0
-  ) {
-    triggered = true;
-    showNewYear();
-  }
-}, 1000);
+  setInterval(() => {
+    let date = new Date();
+    let clock = document.getElementById('clock');
+
+    let time =
+      date.getHours().toString().padStart(2, '0') + ":" +
+      date.getMinutes().toString().padStart(2, '0') + ":" +
+      date.getSeconds().toString().padStart(2, '0');
+
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    let dayName = days[date.getDay()];
+    let day = date.getDate();
+    let month = months[date.getMonth()];
+    let year = date.getFullYear();
+
+    clock.innerHTML = `${time}<br>${dayName}, ${month} ${day}, ${year}`;
+
+    // 🎆 TRIGGER TAHUN BARU
+    if (
+      year === 2026 &&
+      date.getMonth() === 0 &&
+      day === 1 &&
+      date.getHours() === 0 &&
+      date.getMinutes() === 0 &&
+      date.getSeconds() === 0
+    ) {
+      showNewYear();
+    }
+  }, 1000);
 </script>
    <!-- NEW YEAR OVERLAY -->
 <div id="newYearOverlay" style="display:none;">
