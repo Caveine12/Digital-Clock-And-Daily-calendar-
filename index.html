@@ -31,28 +31,60 @@
   </footer>
 
   <script>
-    // CLOCK SCRIPT
-    setInterval(() => {
-      let date = new Date();
-      let clock = document.getElementById('clock');
-      let time =
-        date.getHours().toString().padStart(2, '0') + ":" +
-        date.getMinutes().toString().padStart(2, '0') + ":" +
-        date.getSeconds().toString().padStart(2, '0');
+  function showNewYear() {
+    document.getElementById("newYearOverlay").style.display = "flex";
 
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
+    if (Notification.permission === "granted") {
+      new Notification("🎉 Happy New Year 2026!", {
+        body: "Semoga tahun ini penuh berkah dan kebahagiaan ✨",
+        icon: "favicon.ico"
+      });
+    }
+  }
 
-      let dayName = days[date.getDay()];
-      let day = date.getDate();
-      let month = months[date.getMonth()];
-      let year = date.getFullYear();
-      let fullDate = `${dayName}, ${month} ${day}, ${year}`;
-      clock.innerHTML = `${time}<br>${fullDate}`;
-    }, 1000);
-  </script>
+  if ("Notification" in window) {
+    Notification.requestPermission();
+  }
+
+  setInterval(() => {
+    let date = new Date();
+    let clock = document.getElementById('clock');
+
+    let time =
+      date.getHours().toString().padStart(2, '0') + ":" +
+      date.getMinutes().toString().padStart(2, '0') + ":" +
+      date.getSeconds().toString().padStart(2, '0');
+
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    let dayName = days[date.getDay()];
+    let day = date.getDate();
+    let month = months[date.getMonth()];
+    let year = date.getFullYear();
+
+    clock.innerHTML = `${time}<br>${dayName}, ${month} ${day}, ${year}`;
+
+    // 🎆 TRIGGER TAHUN BARU
+    if (
+      year === 2026 &&
+      date.getMonth() === 0 &&
+      day === 1 &&
+      date.getHours() === 0 &&
+      date.getMinutes() === 0 &&
+      date.getSeconds() === 0
+    ) {
+      showNewYear();
+    }
+  }, 1000);
+</script>
+   <!-- NEW YEAR OVERLAY -->
+<div id="newYearOverlay">
+  🎉 Happy New Year 2026 🎉<br>
+  <span>Semoga tahun ini membawa kebaikan ✨</span>
+</div> 
 </body>
 </html>
