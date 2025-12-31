@@ -69,22 +69,28 @@
     clock.innerHTML = `${time}<br>${dayName}, ${month} ${day}, ${year}`;
 
     // 🎆 TRIGGER TAHUN BARU
-    if (
-      year === 2026 &&
-      date.getMonth() === 0 &&
-      day === 1 &&
-      date.getHours() === 0 &&
-      date.getMinutes() === 0 &&
-      date.getSeconds() === 0
-    ) {
-      showNewYear();
-    }
-  }, 1000);
+    let triggered = false;
+
+setInterval(() => {
+  const date = new Date();
+
+  if (
+    !triggered &&
+    date.getFullYear() === 2026 &&
+    date.getMonth() === 0 &&
+    date.getDate() === 1 &&
+    date.getHours() === 0 &&
+    date.getMinutes() === 0
+  ) {
+    triggered = true;
+    showNewYear();
+  }
+}, 1000);
 </script>
    <!-- NEW YEAR OVERLAY -->
-<div id="newYearOverlay">
+<div id="newYearOverlay" style="display:none;">
   🎉 Happy New Year 2026 🎉<br>
   <span>Semoga tahun ini membawa kebaikan ✨</span>
-</div> 
+</div>
 </body>
 </html>
