@@ -173,3 +173,40 @@ footer p {
     height: 70px;
   }
 }
+/* === HAPPY NEW YEAR OVERLAY === */
+#newYearOverlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #3a2b71, #0f0c29);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  z-index: 9999;
+  animation: fadeInNY 2s ease-in-out;
+}
+
+#newYearOverlay {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffd166;
+  text-shadow: 0 0 20px rgba(255, 209, 102, 0.7);
+}
+
+#newYearOverlay span {
+  margin-top: 15px;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+@keyframes fadeInNY {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
